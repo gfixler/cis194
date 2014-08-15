@@ -1,3 +1,6 @@
+import Data.Char
+
+
 toDigits :: Integer -> [Integer]
 toDigits 0 = []
 toDigits n = digit : toDigits rest
@@ -31,4 +34,8 @@ toDigits'' :: Integer -> [Integer]
 toDigits'' n
     | n > 0     = map charToDigit $ show n
     | otherwise = []
+
+
+toDigits''' :: Integer -> [Integer]
+toDigits''' = map (fromIntegral . digitToInt) . show
 
