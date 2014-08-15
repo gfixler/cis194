@@ -1,13 +1,14 @@
 import Data.Char
 
 
+-- version 1: least significant digit efforts
 toDigits :: Integer -> [Integer]
 toDigits 0 = []
 toDigits n = digit : toDigits rest
     where rest = floor ((fromIntegral n) / 10)
           digit = n - rest * 10
 
-
+-- version 2: read/show fussing
 toDigits' :: Integer -> [Integer]
 toDigits' n
     | n > 0     = digit : toDigits' digits
@@ -16,7 +17,7 @@ toDigits' n
           digit  = read (x:[]) :: Integer
           digits = read xs :: Integer
 
-
+-- version 3: custom, mappable String -> Integer
 charToDigit :: Char -> Integer
 charToDigit n
     | n == '0' = 0
@@ -35,7 +36,7 @@ toDigits'' n
     | n > 0     = map charToDigit $ show n
     | otherwise = []
 
-
+-- version 4: oh, right, Data.Char
 toDigits''' :: Integer -> [Integer]
 toDigits''' = map (fromIntegral . digitToInt) . show
 
