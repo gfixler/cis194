@@ -15,3 +15,6 @@ doubleOddIndices (x:y:ys) = 2 * x : y : doubleOddIndices ys
 
 doubleEveryOther = reverse . doubleOddIndices . reverse
 
+sumDigits :: [Integer] -> Integer
+sumDigits = sum . map (sum . toDigits)
+
