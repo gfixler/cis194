@@ -8,12 +8,12 @@ toDigits n
 
 toDigitsRev = reverse . toDigits
 
-doubleOddIndices :: [Integer] -> [Integer]
-doubleOddIndices []  = []
-doubleOddIndices [x] = [2 * x]
-doubleOddIndices (x:y:ys) = 2 * x : y : doubleOddIndices ys
+doubleEvenIndices :: [Integer] -> [Integer]
+doubleEvenIndices []  = []
+doubleEvenIndices [x] = [x]
+doubleEvenIndices (x:y:ys) = x : 2 * y : doubleEvenIndices ys
 
-doubleEveryOther = reverse . doubleOddIndices . reverse
+doubleEveryOther = reverse . doubleEvenIndices . reverse
 
 sumDigits :: [Integer] -> Integer
 sumDigits = sum . map (sum . toDigits)
