@@ -1,42 +1,8 @@
-import Data.Char
-
-
--- version 1: least significant digit efforts
-toDigits :: Integer -> [Integer]
-toDigits 0 = []
-toDigits n = digit : toDigits rest
-    where rest = floor ((fromIntegral n) / 10)
-          digit = n - rest * 10
-
--- version 2: read/show fussing
-toDigits' :: Integer -> [Integer]
-toDigits' n
-    | n > 0     = digit : toDigits' digits
-    | otherwise = []
-    where (x:xs) = show n
-          digit  = read (x:[]) :: Integer
-          digits = read xs :: Integer
-
--- version 3: custom, mappable String -> Integer
 charToDigit :: Char -> Integer
-charToDigit n
-    | n == '0' = 0
-    | n == '1' = 1
-    | n == '2' = 2
-    | n == '3' = 3
-    | n == '4' = 4
-    | n == '5' = 5
-    | n == '6' = 6
-    | n == '7' = 7
-    | n == '8' = 8
-    | n == '9' = 9
+charToDigit n = head [d | (c,d) <- zip ['0'..'9'] [0..9], c == n]
 
-toDigits'' :: Integer -> [Integer]
-toDigits'' n
+toDigits :: Integer -> [Integer]
+toDigits n
     | n > 0     = map charToDigit $ show n
     | otherwise = []
-
--- version 4: oh, right, Data.Char
-toDigits''' :: Integer -> [Integer]
-toDigits''' = map (fromIntegral . digitToInt) . show
 
