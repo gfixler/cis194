@@ -6,3 +6,5 @@ toDigits n
     | n > 0     = map charToDigit $ show n
     | otherwise = []
 
+toDigitsRev = reverse . toDigits
+
