@@ -18,3 +18,6 @@ doubleEveryOther = reverse . doubleEvenIndices . reverse
 sumDigits :: [Integer] -> Integer
 sumDigits = sum . map (sum . toDigits)
 
+validate :: Integer -> Bool
+validate n = (sumDigits . doubleEveryOther . toDigits $ n) `rem` 10 == 0
+
