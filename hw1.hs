@@ -8,3 +8,10 @@ toDigits n
 
 toDigitsRev = reverse . toDigits
 
+doubleOddDigits :: [Integer] -> [Integer]
+doubleOddDigits []  = []
+doubleOddDigits [x] = [2 * x]
+doubleOddDigits (x:y:ys) = 2 * x : y : doubleOddDigits ys
+
+doubleEveryOther = reverse . doubleOddDigits . reverse
+
