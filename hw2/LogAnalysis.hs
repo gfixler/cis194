@@ -20,3 +20,6 @@ parseMessage m =
         etime = read ets :: TimeStamp
         emessage = unwords emsg
 
+parse :: String -> [LogMessage]
+parse = map parseMessage . lines
+
