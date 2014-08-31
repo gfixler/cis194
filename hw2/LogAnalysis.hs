@@ -4,21 +4,20 @@ module LogAnalysis where
 
 import Log
 
+toTime :: String -> TimeStamp
+toTime t = read t :: TimeStamp
+
+toError :: String -> MessageType
+toError e = Error (read e :: Int)
+
 parseMessage :: String -> LogMessage
 parseMessage m =
-    case (take 1 m) of
-        "I" -> LogMessage Info time message
-        "W" -> LogMessage Warning time message
-        "E" -> LogMessage (Error err) etime emessage
+    case t of
+        "I" -> LogMessage Info (toTime a) (unwords (b:bs))
+        "W" -> LogMessage Warning (toTime a) (unwords (b:bs))
+        "E" -> LogMessage (toError a) (toTime b) (unwords bs)
         _   -> Unknown m
-    where
-        (_:ts:msg) = words m
-        time = read ts :: TimeStamp
-        message = unwords msg
-        (_:et:ets:emsg) = words m
-        err = read et :: Int
-        etime = read ets :: TimeStamp
-        emessage = unwords emsg
+        where (t:a:b:bs) = words m
 
 parse :: String -> [LogMessage]
 parse = map parseMessage . lines
