@@ -4,16 +4,19 @@ module LogAnalysis where
 
 import Log
 
-handleMessage :: MessageType -> String -> LogMessage
-handleMessage mt m = LogMessage mt timestamp message
+parseMessage :: String -> LogMessage
+parseMessage m =
+    case (take 1 m) of
+        "I" -> LogMessage Info time message
+        "W" -> LogMessage Warning time message
+        "E" -> LogMessage (Error err) etime emessage
+        _   -> Unknown m
     where
-        timestamp = read . head . tail $ words m :: TimeStamp
-        message = unwords . tail . tail $ words m
-
-handleError :: String -> LogMessage
-handleError m = LogMessage (Error err) timestamp message
-    where
-        err = read . head . tail $ words m :: Int
-        timestamp = read . head . tail . tail $ words m :: TimeStamp
-        message = unwords . tail . tail . tail $ words m
+        (_:ts:msg) = words m
+        time = read ts :: TimeStamp
+        message = unwords msg
+        (_:et:ets:emsg) = words m
+        err = read et :: Int
+        etime = read ets :: TimeStamp
+        emessage = unwords emsg
 
