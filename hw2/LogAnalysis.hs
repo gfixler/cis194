@@ -30,3 +30,6 @@ insert (LogMessage t ts m) (Node l (LogMessage t' ts' m') r) =
     then Node (insert (LogMessage t ts m) l) (LogMessage t' ts' m') r
     else Node l (LogMessage t' ts' m') (insert (LogMessage t ts m) r)
 
+build :: [LogMessage] -> MessageTree
+build = foldl (flip insert) Leaf
+
