@@ -22,3 +22,11 @@ parseMessage m =
 parse :: String -> [LogMessage]
 parse = map parseMessage . lines
 
+insert :: LogMessage -> MessageTree -> MessageTree
+insert (Unknown _) tree = tree
+insert (LogMessage t ts m) Leaf = Node Leaf (LogMessage t ts m) Leaf
+insert (LogMessage t ts m) (Node l (LogMessage t' ts' m') r) =
+    if ts < ts'
+    then Node (insert (LogMessage t ts m) l) (LogMessage t' ts' m') r
+    else Node l (LogMessage t ts m) (insert (LogMessage t' ts' m') r)
+
