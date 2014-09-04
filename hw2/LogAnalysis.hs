@@ -1,14 +1,8 @@
 {-# OPTIONS_GHC -Wall #-}
 module LogAnalysis where
 
-
 import Log
 
-toTime :: String -> TimeStamp
-toTime t = read t :: TimeStamp
-
-toError :: String -> MessageType
-toError e = Error (read e :: Int)
 
 parseNonError :: MessageType -> [String] -> LogMessage
 parseNonError _ []        = Unknown ""
