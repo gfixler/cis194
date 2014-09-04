@@ -48,3 +48,7 @@ isBigError (LogMessage (Error e) _ _)
     | otherwise = False
 isBigError _                          = False
 
+extractErrorMsg :: LogMessage -> Maybe String
+extractErrorMsg (LogMessage (Error _) _ msg) = Just msg
+extractErrorMsg _                            = Nothing
+
