@@ -5,9 +5,8 @@ import Log
 
 
 parseError :: [String] -> LogMessage
-parseError []         = Unknown ""
-parseError [_]        = Unknown ""
 parseError (e:ts:msg) = LogMessage (Error (read e)) (read ts :: TimeStamp) (unwords msg)
+parseError _          = Unknown ""
 
 parseNonError :: MessageType -> [String] -> LogMessage
 parseNonError _ []        = Unknown ""
