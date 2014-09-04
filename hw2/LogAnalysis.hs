@@ -10,14 +10,25 @@ toTime t = read t :: TimeStamp
 toError :: String -> MessageType
 toError e = Error (read e :: Int)
 
+parseNonError :: MessageType -> [String] -> LogMessage
+parseNonError _ []        = Unknown ""
+parseNonError mt [ts]     = LogMessage mt (read ts :: TimeStamp) ""
+parseNonError mt (ts:msg) = LogMessage mt (read ts :: TimeStamp) (unwords msg)
+
+parseError :: [String] -> LogMessage
+parseError []         = Unknown ""
+parseError [_]        = Unknown ""
+parseError (e:ts:msg) = LogMessage (Error (read e)) (read ts :: TimeStamp) (unwords msg)
+
 parseMessage :: String -> LogMessage
-parseMessage m =
+parseMessage "" = Unknown ""
+parseMessage (t:rest) =
     case t of
-        "I" -> LogMessage Info (toTime a) (unwords (b:bs))
-        "W" -> LogMessage Warning (toTime a) (unwords (b:bs))
-        "E" -> LogMessage (toError a) (toTime b) (unwords bs)
-        _   -> Unknown m
-        where (t:a:b:bs) = words m
+        'I' -> parseNonError Info parts
+        'W' -> parseNonError Warning parts
+        'E' -> parseError parts
+        _   -> Unknown (unwords parts)
+        where parts = words rest
 
 parse :: String -> [LogMessage]
 parse = map parseMessage . lines
