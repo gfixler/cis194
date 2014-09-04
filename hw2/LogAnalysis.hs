@@ -4,23 +4,23 @@ module LogAnalysis where
 import Log
 
 
-parseNonError :: MessageType -> [String] -> LogMessage
-parseNonError _ []        = Unknown ""
-parseNonError mt [ts]     = LogMessage mt (read ts :: TimeStamp) ""
-parseNonError mt (ts:msg) = LogMessage mt (read ts :: TimeStamp) (unwords msg)
-
 parseError :: [String] -> LogMessage
 parseError []         = Unknown ""
 parseError [_]        = Unknown ""
 parseError (e:ts:msg) = LogMessage (Error (read e)) (read ts :: TimeStamp) (unwords msg)
 
+parseNonError :: MessageType -> [String] -> LogMessage
+parseNonError _ []        = Unknown ""
+parseNonError mt [ts]     = LogMessage mt (read ts :: TimeStamp) ""
+parseNonError mt (ts:msg) = LogMessage mt (read ts :: TimeStamp) (unwords msg)
+
 parseMessage :: String -> LogMessage
 parseMessage "" = Unknown ""
 parseMessage (t:rest) =
     case t of
+        'E' -> parseError parts
         'I' -> parseNonError Info parts
         'W' -> parseNonError Warning parts
-        'E' -> parseError parts
         _   -> Unknown (unwords parts)
         where parts = words rest
 
