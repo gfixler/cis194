@@ -1,6 +1,7 @@
 {-# OPTIONS_GHC -Wall #-}
 module LogAnalysis where
 
+import Data.Maybe
 import Log
 
 
@@ -51,4 +52,7 @@ isBigError _                          = False
 extractErrorMsg :: LogMessage -> Maybe String
 extractErrorMsg (LogMessage (Error _) _ msg) = Just msg
 extractErrorMsg _                            = Nothing
+
+whatWentWrong :: [LogMessage] -> [String]
+whatWentWrong lms = catMaybes $ map extractErrorMsg (inOrder . build $ filter isBigError lms)
 
