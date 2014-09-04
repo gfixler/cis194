@@ -1,5 +1,6 @@
 module Golf where
 
+import Data.List
 import Data.Maybe
 
 
@@ -19,4 +20,17 @@ maxima (a,b,c)
 
 localMaxima :: [Integer] -> [Integer]
 localMaxima xs = catMaybes $ map maxima (zip3 xs (tail xs) (tail $ tail xs))
+
+row :: [Integer] -> String
+row r = [if elem i r then '*' else ' ' | i <- [0..9]]
+
+wipe :: [Integer] -> [Integer]
+wipe xs = foldl (\a b -> b a) xs (map (delete) [0..9])
+
+bars :: [Integer] -> [String]
+bars [] = []
+bars xs = row xs : bars (wipe xs)
+
+histogram :: [Integer] -> String
+histogram xs = unlines . reverse $ [['0'..'9'],"=========="] ++ bars xs
 
