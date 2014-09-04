@@ -9,9 +9,10 @@ parseError (e:ts:msg) = LogMessage (Error (read e)) (read ts :: TimeStamp) (unwo
 parseError _          = Unknown ""
 
 parseNonError :: MessageType -> [String] -> LogMessage
-parseNonError _ []        = Unknown ""
-parseNonError mt [ts]     = LogMessage mt (read ts :: TimeStamp) ""
-parseNonError mt (ts:msg) = LogMessage mt (read ts :: TimeStamp) (unwords msg)
+parseNonError _ [] = Unknown ""
+parseNonError mt (ts:msg)
+    | ts == []  = Unknown ""
+    | otherwise = LogMessage mt (read ts :: TimeStamp) (unwords msg)
 
 parseMessage :: String -> LogMessage
 parseMessage "" = Unknown ""
