@@ -42,3 +42,9 @@ inOrder :: MessageTree -> [LogMessage]
 inOrder Leaf                = []
 inOrder (Node l lm r)       = inOrder l ++ [lm] ++ inOrder r
 
+isBigError :: LogMessage -> Bool
+isBigError (LogMessage (Error e) _ _)
+    | e > 50    = True
+    | otherwise = False
+isBigError _                          = False
+
