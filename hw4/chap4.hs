@@ -27,8 +27,8 @@ sprout v = Node 0 Leaf v Leaf
 treeInsert :: a -> Tree a -> Tree a
 treeInsert v Leaf = sprout v
 treeInsert v (Node h Leaf tv Leaf) = Node (h+1) (sprout v) tv Leaf
-treeInsert v (Node h Leaf tv t@(Node _ _ _ _)) = Node (h+1) (sprout v) tv t
-treeInsert v (Node h t@(Node _ _ _ _) tv Leaf) = Node (h+1) t tv (sprout v)
+treeInsert v (Node h Leaf tv t) = Node (h+1) (sprout v) tv t
+treeInsert v (Node h t tv Leaf) = Node (h+1) t tv (sprout v)
 treeInsert v (Node h l@(Node hl _ _ _) tv r@(Node hr _ _ _))
     | hl < hr   = Node (h+1) (treeInsert v l) tv r
     | otherwise = Node (h+1) l tv (treeInsert v r)
