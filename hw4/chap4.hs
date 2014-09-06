@@ -19,16 +19,19 @@ fun2' = sum . filter even . takeWhile (/=1) . iterate hail
 
 data Tree a = Leaf
             | Node Integer (Tree a) a (Tree a)
-    deriving (Show, Eq)
+    deriving (Ord, Show, Eq)
+
+sprout :: a -> Tree a
+sprout v = Node 0 Leaf v Leaf
 
 treeInsert :: a -> Tree a -> Tree a
-treeInsert v Leaf = Node 0 Leaf v Leaf
-treeInsert v (Node h Leaf v' Leaf) = Node (h+1) (treeInsert v Leaf) v' Leaf
-treeInsert v (Node h t@(Node _ _ _ _) v' Leaf) = Node h t v' (treeInsert v Leaf)
-treeInsert v (Node h Leaf v' t@(Node _ _ _ _)) = Node h (treeInsert v Leaf) v' t
-treeInsert v (Node h l@(Node hl _ _ _) v' r@(Node hr _ _ _))
-    | hl < hr   = Node (h+1) (treeInsert v l) v' r
-    | otherwise = Node (h+1) l v' (treeInsert v r)
+treeInsert v Leaf = sprout v
+treeInsert v (Node h Leaf tv Leaf) = Node (h+1) (sprout v) tv Leaf
+treeInsert v (Node h Leaf tv t@(Node _ _ _ _)) = Node (h+1) (sprout v) tv t
+treeInsert v (Node h t@(Node _ _ _ _) tv Leaf) = Node (h+1) t tv (sprout v)
+treeInsert v (Node h l@(Node hl _ _ _) tv r@(Node hr _ _ _))
+    | hl < hr   = Node (h+1) (treeInsert v l) tv r
+    | otherwise = Node (h+1) l tv (treeInsert v r)
 
 foldTree :: [a] -> Tree a
 foldTree = foldr treeInsert Leaf
