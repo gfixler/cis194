@@ -40,3 +40,6 @@ foldTree = foldr treeInsert Leaf
 xor :: [Bool] -> Bool
 xor = foldl (\a b -> if b then a /= b else a) False
 
+map' :: (a -> b) -> [a] -> [b]
+map' f = foldr (\a b -> f a : b) []
+
