@@ -36,3 +36,7 @@ treeInsert v (Node h l@(Node hl _ _ _) tv r@(Node hr _ _ _))
 foldTree :: [a] -> Tree a
 foldTree = foldr treeInsert Leaf
 
+
+xor :: [Bool] -> Bool
+xor = foldl (\a b -> if b then a /= b else a) False
+
