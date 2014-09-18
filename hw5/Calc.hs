@@ -8,9 +8,9 @@ class Expr a where
     add, mul :: a -> a -> a
 
 instance Expr ExprT where
-    lit a = Lit a
-    add a b = Add a b
-    mul a b = Mul a b
+    lit = Lit
+    add = Add
+    mul = Mul
 
 eval :: ExprT -> Integer
 eval (Lit a) = a
