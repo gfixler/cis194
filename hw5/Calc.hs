@@ -1,3 +1,5 @@
+{-# LANGUAGE GeneralizedNewtypeDeriving #-}
+
 module Calc where
 
 import ExprT
@@ -23,6 +25,19 @@ instance Expr Bool where
         | otherwise = False
     add = (||)
     mul = (&&)
+
+newtype MinMax = MinMax Integer deriving (Eq, Ord, Num, Show)
+newtype Mod7 = Mod7 Integer deriving (Eq, Ord, Num, Show)
+
+instance Expr MinMax where
+    lit = MinMax
+    add = min
+    mul = max
+
+instance Expr Mod7 where
+    lit a = Mod7 (a `mod` 7)
+    add = (+)
+    mul = (*)
 
 eval :: ExprT -> Integer
 eval (Lit a) = a
