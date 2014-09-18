@@ -3,6 +3,14 @@ module Calc where
 import ExprT
 import Parser
 
+class Expr a where
+    lit :: Integer -> a
+    add, mul :: a -> a -> a
+
+instance Expr ExprT where
+    lit a = Lit a
+    add a b = Add a b
+    mul a b = Mul a b
 
 eval :: ExprT -> Integer
 eval (Lit a) = a
