@@ -12,6 +12,18 @@ instance Expr ExprT where
     add = Add
     mul = Mul
 
+instance Expr Integer where
+    lit = id
+    add = (+)
+    mul = (*)
+
+instance Expr Bool where
+    lit a
+        | a > 0     = True
+        | otherwise = False
+    add = (||)
+    mul = (&&)
+
 eval :: ExprT -> Integer
 eval (Lit a) = a
 eval (Add a b) = eval a + eval b
