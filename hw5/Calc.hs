@@ -35,3 +35,17 @@ instance Expr Bool where
     add = (||)
     mul = (&&)
 
+newtype MinMax = MinMax Integer deriving (Eq, Ord, Show)
+
+instance Expr MinMax where
+    lit = MinMax
+    add = max
+    mul = min
+
+newtype Mod7 = Mod7 Integer deriving (Eq, Show)
+
+instance Expr Mod7 where
+    lit = Mod7 . (`mod` 7)
+    add (Mod7 a) (Mod7 b) = lit (a + b)
+    mul (Mod7 a) (Mod7 b) = lit (a * b)
+
