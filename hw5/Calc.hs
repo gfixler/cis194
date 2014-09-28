@@ -22,3 +22,6 @@ instance Expr ExprT where
     add = Add
     mul = Mul
 
+reify :: ExprT -> ExprT
+reify = id
+
