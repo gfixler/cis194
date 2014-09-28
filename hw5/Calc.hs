@@ -25,3 +25,13 @@ instance Expr ExprT where
 reify :: ExprT -> ExprT
 reify = id
 
+instance Expr Integer where
+    lit = id
+    add = (+)
+    mul = (*)
+
+instance Expr Bool where
+    lit n = if n > 0 then True else False
+    add = (||)
+    mul = (&&)
+
