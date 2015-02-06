@@ -26,3 +26,17 @@ test2 = evalStr "3" == Just 3 &&
         evalStr "(3*2)+4" == Just 10 &&
         evalStr "3*(2+4)" == Just 18
 
+-- Exercise 3
+class Expr a where
+    lit :: Integer -> a
+    add :: a -> a -> a
+    mul :: a -> a -> a
+
+instance Expr ExprT where
+    lit = Lit
+    add = Add
+    mul = Mul
+
+reify :: ExprT -> ExprT
+reify = id
+
