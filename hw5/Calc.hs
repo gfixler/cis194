@@ -45,3 +45,28 @@ test3 = lit 3 == Lit 3 &&
         mul (lit 2) (lit 5) == Mul (Lit 2) (Lit 5) &&
         mul (lit 2) (add (lit 3) (lit 7)) == Mul (Lit 2) (Add (Lit 3) (Lit 7))
 
+-- Exercise 4
+instance Expr Integer where
+    lit = id
+    add = (+)
+    mul = (*)
+
+instance Expr Bool where
+    lit = (>0)
+    add = (||)
+    mul = (&&)
+
+newtype MinMax = MinMax Integer deriving (Eq, Show)
+
+instance Expr MinMax where
+    lit = MinMax
+    add (MinMax a) (MinMax b) = MinMax $ max a b
+    mul (MinMax a) (MinMax b) = MinMax $ min a b
+
+newtype Mod7 = Mod7 Integer deriving (Eq, Show)
+
+instance Expr Mod7 where
+    lit x = Mod7 $ x `mod` 7
+    add (Mod7 a) (Mod7 b) = Mod7 $ (a + b) `mod` 7
+    mul (Mod7 a) (Mod7 b) = Mod7 $ (a * b) `mod` 7
+
