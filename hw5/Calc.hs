@@ -88,3 +88,8 @@ instance Expr S.Program where
     add a b = a ++ b ++ [S.Add]
     mul a b = a ++ b ++ [S.Mul]
 
+compile :: String -> Maybe S.Program
+compile s = case parseExp lit add mul s of
+    Just x  -> Just $ x
+    Nothing -> Nothing
+
