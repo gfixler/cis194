@@ -20,3 +20,9 @@ evalStr s = case parseExp Lit Add Mul s of
     Just x  -> Just $ eval x
     Nothing -> Nothing
 
+test2 = evalStr "3" == Just 3 &&
+        evalStr "2+3" == Just 5 &&
+        evalStr "2*3" == Just 6 &&
+        evalStr "(3*2)+4" == Just 10 &&
+        evalStr "3*(2+4)" == Just 18
+
