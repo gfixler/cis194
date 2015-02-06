@@ -40,3 +40,8 @@ instance Expr ExprT where
 reify :: ExprT -> ExprT
 reify = id
 
+test3 = lit 3 == Lit 3 &&
+        add (lit 3) (lit 4) == Add (Lit 3) (Lit 4) &&
+        mul (lit 2) (lit 5) == Mul (Lit 2) (Lit 5) &&
+        mul (lit 2) (add (lit 3) (lit 7)) == Mul (Lit 2) (Add (Lit 3) (Lit 7))
+
