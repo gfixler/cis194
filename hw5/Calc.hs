@@ -98,3 +98,18 @@ test5 = compile "1" == Just [S.PushI 1] &&
         compile "2+4" == Just [S.PushI 2,S.PushI 4,S.Add] &&
         compile "1+(2*5)" == Just [S.PushI 1,S.PushI 2,S.PushI 5,S.Mul,S.Add]
 
+-- Exercise 6
+class HasVars a where
+    var :: String -> a
+
+data VarExprT = VLit Integer
+              | VAdd VarExprT VarExprT
+              | VMul VarExprT VarExprT
+              | VVar String
+    deriving (Show, Eq)
+
+instance Expr VarExprT where
+    lit = VLit
+    add = VAdd
+    mul = VMul
+
