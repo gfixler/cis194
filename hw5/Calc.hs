@@ -93,3 +93,8 @@ compile s = case parseExp lit add mul s of
     Just x  -> Just $ x
     Nothing -> Nothing
 
+test5 = compile "1" == Just [S.PushI 1] &&
+        compile "3*5" == Just [S.PushI 3,S.PushI 5,S.Mul] &&
+        compile "2+4" == Just [S.PushI 2,S.PushI 4,S.Add] &&
+        compile "1+(2*5)" == Just [S.PushI 1,S.PushI 2,S.PushI 5,S.Mul,S.Add]
+
