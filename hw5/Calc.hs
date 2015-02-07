@@ -3,8 +3,10 @@
 
 module Calc where
 
+import qualified Data.Map as M
 import Parser
 import ExprT
+import qualified VarExprT as V
 import qualified StackVM as S
 
 -- Exercise 1
@@ -112,4 +114,24 @@ instance Expr VarExprT where
     lit = VLit
     add = VAdd
     mul = VMul
+
+instance HasVars VarExprT where
+    var = VVar
+
+instance Expr (M.Map String Integer -> Maybe Integer) where
+    lit x = \_ -> Just x
+    add a b = \m -> case (a m, b m) of
+                        (Just a', Just b') -> Just (a' + b')
+                        _                  -> Nothing
+    mul a b = \m -> case (a m, b m) of
+                        (Just a', Just b') -> Just (a' * b')
+                        _                  -> Nothing
+
+instance HasVars (M.Map String Integer -> Maybe Integer) where
+    var k = \m -> M.lookup k m
+
+withVars :: [(String, Integer)]
+         -> (M.Map String Integer -> Maybe Integer)
+         -> Maybe Integer
+withVars vs exp = exp $ M.fromList vs
 
