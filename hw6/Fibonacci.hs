@@ -1,3 +1,6 @@
+{-# LANGUAGE FlexibleInstances #-}
+{-# OPTIONS_GHC -fno-warn-missing-methods #-}
+
 module Fibonacci where
 
 import Data.List
@@ -19,7 +22,7 @@ fibs2 = 0 : 1 : zipWith (+) fibs2 (tail fibs2)
 data Stream a = Cons a (Stream a)
 
 streamToList :: Stream a -> [a]
-streamToList (Cons a b) = a : streamToList b
+streamToList (Cons x xs) = x : streamToList xs
 
 instance Show a => Show (Stream a) where
     show = listWrap . intercalate "," . map show . take 20 . streamToList
@@ -30,7 +33,7 @@ streamRepeat :: a -> Stream a
 streamRepeat x = Cons x (streamRepeat x)
 
 streamMap :: (a -> b) -> Stream a -> Stream b
-streamMap f (Cons a b) = Cons (f a) (streamMap f b)
+streamMap f (Cons x xs) = Cons (f x) (streamMap f xs)
 
 streamFromSeed :: (a -> a) -> a -> Stream a
 streamFromSeed f x = Cons x (streamFromSeed f (f x))
@@ -60,7 +63,7 @@ evalLim cs l x = foldr (\(c,e) a -> a + c * x^e) 0 stream
 instance Num (Stream Integer) where
     fromInteger n = Cons n (streamRepeat 0)
     negate = streamMap negate
-    (Cons a as) + (Cons b bs) = Cons (a + b) (as + bs)
-    (Cons a as) * bbs@(Cons b bs) = Cons (a * b)
-                                         (streamMap (*a) bs + as * bbs)
+    (Cons x xs) + (Cons y ys) = Cons (x + y) (xs + ys)
+    (Cons x xs) * yss@(Cons y ys) = Cons (x * y)
+                                         (streamMap (*x) ys + xs * yss)
 
