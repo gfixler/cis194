@@ -57,3 +57,10 @@ evalLim :: Stream Integer -> Int -> Integer -> Integer
 evalLim cs l x = foldr (\(c,e) a -> a + c * x^e) 0 stream
     where stream = take l $ zip (streamToList cs) [0..]
 
+instance Num (Stream Integer) where
+    fromInteger n = Cons n (streamRepeat 0)
+    negate = streamMap negate
+    (Cons a as) + (Cons b bs) = Cons (a + b) (as + bs)
+    (Cons a as) * bbs@(Cons b bs) = Cons (a * b)
+                                         (streamMap (*a) bs + as * bbs)
+
