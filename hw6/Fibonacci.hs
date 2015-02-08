@@ -1,5 +1,7 @@
 module Fibonacci where
 
+import Data.List
+
 -- Exercise 1
 fib :: Integer -> Integer
 fib 0 = 0
@@ -22,4 +24,14 @@ streamToList (Stream a b) = a : streamToList b
 instance Show a => Show (Stream a) where
     show = listWrap . intercalate "," . map show . take 20 . streamToList
         where listWrap = ("["++) . (++",...]")
+
+-- Exercise 4
+streamRepeat :: a -> Stream a
+streamRepeat x = Stream x (streamRepeat x)
+
+streamMap :: (a -> b) -> Stream a -> Stream b
+streamMap f (Stream a b) = Stream (f a) (streamMap f b)
+
+streamFromSeed :: (a -> a) -> a -> Stream a
+streamFromSeed f x = Stream x (streamFromSeed f (f x))
 
