@@ -16,10 +16,10 @@ fibs2 :: [Integer]
 fibs2 = 0 : 1 : zipWith (+) fibs2 (tail fibs2)
 
 -- Exercise 3
-data Stream a = Stream a (Stream a)
+data Stream a = Cons a (Stream a)
 
 streamToList :: Stream a -> [a]
-streamToList (Stream a b) = a : streamToList b
+streamToList (Cons a b) = a : streamToList b
 
 instance Show a => Show (Stream a) where
     show = listWrap . intercalate "," . map show . take 20 . streamToList
@@ -27,11 +27,11 @@ instance Show a => Show (Stream a) where
 
 -- Exercise 4
 streamRepeat :: a -> Stream a
-streamRepeat x = Stream x (streamRepeat x)
+streamRepeat x = Cons x (streamRepeat x)
 
 streamMap :: (a -> b) -> Stream a -> Stream b
-streamMap f (Stream a b) = Stream (f a) (streamMap f b)
+streamMap f (Cons a b) = Cons (f a) (streamMap f b)
 
 streamFromSeed :: (a -> a) -> a -> Stream a
-streamFromSeed f x = Stream x (streamFromSeed f (f x))
+streamFromSeed f x = Cons x (streamFromSeed f (f x))
 
