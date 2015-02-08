@@ -48,3 +48,12 @@ ruler = doRuler 0
     where doRuler n = Cons n (interleaveStreams (doRuler (n+1))
                                                 (streamRepeat n))
 
+-- Exercise 6
+x :: Stream Integer
+x = Cons 0 (Cons 1 (streamRepeat 0))
+
+-- suggested by pjdelport on #haskell-beginners
+evalLim :: Stream Integer -> Int -> Integer -> Integer
+evalLim cs l x = foldr (\(c,e) a -> a + c * x^e) 0 stream
+    where stream = take l $ zip (streamToList cs) [0..]
+
