@@ -21,17 +21,11 @@ x +++ y = Append (tag x <> tag y) x y
 
 -- Exercise 2, part 1
 
-instance Sized m => Sized (JoinList m a) where
-    size Empty = Size 0
-    size (Single s _) = size s
-    size (Append s _ _) = size s
-
 indexJ :: (Sized b, Monoid b) => Int -> JoinList b a -> Maybe a
-indexJ _ Empty = Nothing
-indexJ i _ | i < 0 = Nothing
-indexJ 0 (Single _ x) = Just x
-indexJ i (Append m x y) = if (i < n) then indexJ i x
-                                     else indexJ (i - n) y
-    where n = getSize $ size $ tag x
-indexJ _ _ = Nothing
+indexJ _ Empty          = Nothing
+indexJ i _              | i < 0 = Nothing
+indexJ i (Single _ a)   = if i == 0 then Just a else Nothing
+indexJ i (Append _ l r) = if i < i' then indexJ i l
+                                    else indexJ (i-i') r
+    where i' = getSize . size $ tag l
 
