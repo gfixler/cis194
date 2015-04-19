@@ -1,8 +1,11 @@
 {-# LANGUAGE FlexibleInstances #-}
 
+module JoinList where
+
 import Data.Monoid
 import Data.Maybe
-import Sized
+import Sized (Sized, size, getSize)
+import Scrabble (Score, score, scoreString)
 
 data JoinList m a = Empty
                   | Single m a
@@ -50,4 +53,9 @@ takeJ n (Append _ l r) | n < n'  = takeJ n l
                        | n > n'  = l +++ takeJ (n-n') r
                        | n == n' = l
     where n' = getSize . size $ tag l
+
+-- Exercise 3
+
+scoreLine :: String -> JoinList Score String
+scoreLine s = Single (scoreString s) s
 
