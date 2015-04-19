@@ -15,3 +15,6 @@ score x = case lookup (toLower x) values of
               Nothing -> Score 0
     where values = zip ['a'..'z'] [1,3,3,2,1,4,2,4,1,8,5,1,3,1,1,3,10,1,1,1,1,4,4,8,4,10]
 
+scoreString :: String -> Score
+scoreString = mconcat . map score
+
