@@ -1,5 +1,7 @@
 {-# LANGUAGE GeneralizedNewtypeDeriving #-}
 
+module Scrabble where
+
 import Data.Monoid (Monoid(..))
 import Data.Char (toLower)
 
