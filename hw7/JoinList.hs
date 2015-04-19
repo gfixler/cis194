@@ -6,6 +6,7 @@ import Data.Monoid
 import Data.Maybe
 import Sized (Sized, size, getSize)
 import Scrabble (Score, score, scoreString)
+import Buffer (Buffer(..))
 
 data JoinList m a = Empty
                   | Single m a
@@ -58,4 +59,14 @@ takeJ n (Append _ l r) | n < n'  = takeJ n l
 
 scoreLine :: String -> JoinList Score String
 scoreLine s = Single (scoreString s) s
+
+-- Exercise 4
+
+instance Buffer (JoinList (Score, Size) String) where
+    toString b = undefined
+    fromString = undefined
+    line i s = undefined
+    replaceLine i s b = undefined
+    numLines b = undefined
+    value b = undefined
 
