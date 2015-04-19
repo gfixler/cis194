@@ -40,3 +40,14 @@ dropJ n (Append _ l r) | n < n'  = dropJ n l +++ r
                        | n == n' = r
     where n' = getSize . size $ tag l
 
+-- Exercise 2, part 3
+
+takeJ :: (Sized b, Monoid b) => Int -> JoinList b a -> JoinList b a
+takeJ _ Empty          = Empty
+takeJ n j              | n < 0 = Empty
+takeJ n s@(Single _ _) = if n == 0 then Empty else s
+takeJ n (Append _ l r) | n < n'  = takeJ n l
+                       | n > n'  = l +++ takeJ (n-n') r
+                       | n == n' = l
+    where n' = getSize . size $ tag l
+
