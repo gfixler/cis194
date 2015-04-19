@@ -29,3 +29,14 @@ indexJ i (Append _ l r) = if i < i' then indexJ i l
                                     else indexJ (i-i') r
     where i' = getSize . size $ tag l
 
+-- Exercise 2, part 2
+
+dropJ :: (Sized b, Monoid b) => Int -> JoinList b a -> JoinList b a
+dropJ _ Empty          = Empty
+dropJ n j              | n <= 0 = j
+dropJ n s@(Single _ _) = if n == 0 then s else Empty
+dropJ n (Append _ l r) | n < n'  = dropJ n l +++ r
+                       | n > n'  = dropJ (n-n') r
+                       | n == n' = r
+    where n' = getSize . size $ tag l
+
