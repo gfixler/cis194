@@ -65,6 +65,11 @@ scoreLine s = Single (scoreString s) s
 singleLine :: String -> JoinList (Score, Size) String
 singleLine s = Single (scoreString s, Size $ length s) s
 
+reduce :: [JoinList (Score, Size) String] -> [JoinList (Score, Size) String]
+reduce [] = []
+reduce [x] = [x]
+reduce (x:y:ys) = x +++ y : reduce ys
+
 instance Buffer (JoinList (Score, Size) String) where
     toString b = undefined
     fromString = undefined
