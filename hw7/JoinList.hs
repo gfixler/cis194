@@ -70,6 +70,10 @@ reduce [] = []
 reduce [x] = [x]
 reduce (x:y:ys) = x +++ y : reduce ys
 
+reduceAll :: [JoinList (Score, Size) String] -> JoinList (Score, Size) String
+reduceAll xs = if xs == reduce xs then if xs == [] then Empty else head xs
+                                                   else reduceAll $ reduce xs
+
 instance Buffer (JoinList (Score, Size) String) where
     toString b = undefined
     fromString = undefined
