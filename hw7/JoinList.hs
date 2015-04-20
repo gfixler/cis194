@@ -4,7 +4,7 @@ module JoinList where
 
 import Data.Monoid
 import Data.Maybe
-import Sized (Sized, size, getSize)
+import Sized (Size(..), Sized, size, getSize)
 import Scrabble (Score, score, scoreString)
 import Buffer (Buffer(..))
 
@@ -61,6 +61,9 @@ scoreLine :: String -> JoinList Score String
 scoreLine s = Single (scoreString s) s
 
 -- Exercise 4
+
+singleLine :: String -> JoinList (Score, Size) String
+singleLine s = Single (scoreString s, Size $ length s) s
 
 instance Buffer (JoinList (Score, Size) String) where
     toString b = undefined
