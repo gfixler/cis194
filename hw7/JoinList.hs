@@ -63,7 +63,7 @@ scoreLine s = Single (scoreString s) s
 -- Exercise 4
 
 singleLine :: String -> JoinList (Score, Size) String
-singleLine s = Single (scoreString s, Size $ length s) s
+singleLine s = Single (scoreString s, Size 1) s
 
 reduce :: [JoinList (Score, Size) String] -> [JoinList (Score, Size) String]
 reduce [] = []
