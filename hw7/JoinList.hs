@@ -78,7 +78,9 @@ instance Sized Score where
     size (Score x) = Size x
 
 instance Buffer (JoinList (Score, Size) String) where
-    toString b = undefined
+    toString Empty        = ""
+    toString (Single _ s) = s
+    toString (Append _ l r) = toString l ++ "\n" ++ toString r
     fromString = reduceAll . map singleLine . lines
     line = indexJ
     replaceLine i s b = undefined
