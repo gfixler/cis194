@@ -5,7 +5,7 @@ module JoinList where
 import Data.Monoid
 import Data.Maybe
 import Sized (Size(..), Sized, size, getSize)
-import Scrabble (Score, score, scoreString)
+import Scrabble (Score(..), score, scoreString)
 import Buffer (Buffer(..))
 
 data JoinList m a = Empty
@@ -83,5 +83,5 @@ instance Buffer (JoinList (Score, Size) String) where
     line = indexJ
     replaceLine i s b = undefined
     numLines = getSize . size . tag
-    value b = undefined
+    value = getSize . size . fst . tag
 
