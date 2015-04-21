@@ -74,6 +74,9 @@ reduceAll :: [JoinList (Score, Size) String] -> JoinList (Score, Size) String
 reduceAll xs = if xs == reduce xs then if xs == [] then Empty else head xs
                                                    else reduceAll $ reduce xs
 
+instance Sized Score where
+    size (Score x) = Size x
+
 instance Buffer (JoinList (Score, Size) String) where
     toString b = undefined
     fromString = reduceAll . map singleLine . lines
