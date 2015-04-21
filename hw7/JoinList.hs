@@ -7,6 +7,7 @@ import Data.Maybe
 import Sized (Size(..), Sized, size, getSize)
 import Scrabble (Score(..), score, scoreString)
 import Buffer (Buffer(..))
+import Editor
 
 data JoinList m a = Empty
                   | Single m a
@@ -94,3 +95,9 @@ instance Buffer (JoinList (Score, Size) String) where
     numLines = getSize . size . tag
     value = getSize . size . fst . tag
 
+main = runEditor editor (fromString lines :: JoinList (Score, Size) String)
+    where lines = unlines [ "This buffer is for notes you don't want to save, and for"
+                          , "evaluation of steam valve coefficients."
+                          , "To load a different file, type the character L followed"
+                          , "by the name of the file."
+                          ]
