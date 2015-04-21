@@ -77,7 +77,7 @@ reduceAll xs = if xs == reduce xs then if xs == [] then Empty else head xs
 instance Buffer (JoinList (Score, Size) String) where
     toString b = undefined
     fromString = reduceAll . map singleLine . lines
-    line i s = undefined
+    line = indexJ
     replaceLine i s b = undefined
     numLines b = undefined
     value b = undefined
