@@ -79,6 +79,6 @@ instance Buffer (JoinList (Score, Size) String) where
     fromString = reduceAll . map singleLine . lines
     line = indexJ
     replaceLine i s b = undefined
-    numLines b = undefined
+    numLines = getSize . size . tag
     value b = undefined
 
