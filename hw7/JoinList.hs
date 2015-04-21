@@ -87,7 +87,10 @@ instance Buffer (JoinList (Score, Size) String) where
                                   _             -> toString l ++ "\n" ++ toString r
     fromString = reduceAll . map singleLine . lines
     line = indexJ
-    replaceLine i s b = undefined
+    replaceLine i s b | i < 0 || i >= numLines b = b
+                      | otherwise = takeJ i b
+                                +++ singleLine s
+                                +++ dropJ (i+1) b
     numLines = getSize . size . tag
     value = getSize . size . fst . tag
 
