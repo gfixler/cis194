@@ -1,6 +1,7 @@
 module Party where
 
-import Data.Monoid (Monoid, mappend, mempty)
+import Data.Monoid (Monoid, mappend, mempty, mconcat)
+import Data.Tree (Tree(Node))
 import Employee
 
 
@@ -17,4 +18,14 @@ instance Monoid GuestList where
 moreFun :: GuestList -> GuestList -> GuestList
 moreFun l@(GL _ x) r@(GL _ y) | x > y     = l
                               | otherwise = r
+
+
+-- Exercise 2 helper function
+treeTrav :: Tree a -> [a]
+treeTrav (Node x []) = [x]
+treeTrav (Node x xs) = x : concatMap treeTrav xs
+
+-- Exercise 2
+treeFold :: (a -> b -> b) -> b -> Tree a -> b
+treeFold f acc = foldr f acc . treeTrav
 
