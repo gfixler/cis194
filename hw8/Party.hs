@@ -29,3 +29,10 @@ treeTrav (Node x xs) = x : concatMap treeTrav xs
 treeFold :: (a -> b -> b) -> b -> Tree a -> b
 treeFold f acc = foldr f acc . treeTrav
 
+
+-- Exercise 3
+nextLevel :: Employee -> [(GuestList, GuestList)] -> (GuestList, GuestList)
+nextLevel e gs = (glCons e wo, w)
+    where w  = mconcat $ map fst gs
+          wo = mconcat $ map snd gs
+
