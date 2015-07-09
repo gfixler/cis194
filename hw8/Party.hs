@@ -21,13 +21,13 @@ moreFun l@(GL _ x) r@(GL _ y) | x > y     = l
 
 
 -- Exercise 2 helper function
-treeTrav :: Tree a -> [a]
-treeTrav (Node x []) = [x]
-treeTrav (Node x xs) = x : concatMap treeTrav xs
+treeTraverse :: Tree a -> [a]
+treeTraverse (Node x []) = [x]
+treeTraverse (Node x xs) = x : concatMap treeTraverse xs
 
 -- Exercise 2
 treeFold :: (a -> b -> b) -> b -> Tree a -> b
-treeFold f acc = foldr f acc . treeTrav
+treeFold f acc = foldr f acc . treeTraverse
 
 
 -- Exercise 3
