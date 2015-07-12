@@ -20,14 +20,9 @@ moreFun l@(GL _ x) r@(GL _ y) | x > y     = l
                               | otherwise = r
 
 
--- Exercise 2 helper function
-treeTraverse :: Tree a -> [a]
-treeTraverse (Node x []) = [x]
-treeTraverse (Node x xs) = x : concatMap treeTraverse xs
-
 -- Exercise 2
-treeFold :: (a -> b -> b) -> b -> Tree a -> b
-treeFold f acc = foldr f acc . treeTraverse
+treeFold :: (a -> [b] -> b) -> [b] -> Tree a -> b
+treeFold f l (Node x ts) = f x $ map (treeFold f l) ts
 
 
 -- Exercise 3
