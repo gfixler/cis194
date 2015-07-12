@@ -31,3 +31,8 @@ nextLevel e gs = (glCons e wo, w)
     where w  = mconcat $ map fst gs
           wo = mconcat $ map snd gs
 
+
+-- Exercise 4
+maxFun :: Tree Employee -> GuestList
+maxFun t = let (x,y) = treeFold nextLevel [] t in max x y
+
