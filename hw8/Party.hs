@@ -1,5 +1,6 @@
 module Party where
 
+import Data.List (sort)
 import Data.Monoid (Monoid, mappend, mempty, mconcat)
 import Data.Tree (Tree(Node))
 import Employee
@@ -35,4 +36,16 @@ nextLevel e gs = (glCons e wo, w)
 -- Exercise 4
 maxFun :: Tree Employee -> GuestList
 maxFun t = let (x,y) = treeFold nextLevel [] t in max x y
+
+
+printGuestList :: GuestList -> IO ()
+printGuestList (GL es f) = do
+    putStrLn $ "Total fun: " ++ show f
+    let es' = sort $ map empName es
+    mapM_ print es'
+
+main = do
+    emps <- readFile "company.txt"
+    let emps' = read emps :: Tree Employee
+    printGuestList $ maxFun emps'
 
