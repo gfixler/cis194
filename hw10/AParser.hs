@@ -75,3 +75,13 @@ instance Applicative Parser where
                                                 Nothing        -> Nothing
                                                 Just (x', s'') -> Just (f' x', s'')
 
+-- Exercise 3
+abParser :: Parser (Char, Char)
+abParser = (,) <$> char 'a' <*> char 'b'
+
+abParser_ :: Parser ()
+abParser_ = pure () <$> char 'a' <* char 'b'
+
+intPair :: Parser [Integer]
+intPair = (\x y -> [x,y]) <$> posInt <* char ' ' <*> posInt
+
