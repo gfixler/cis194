@@ -85,3 +85,10 @@ abParser_ = pure () <$> char 'a' <* char 'b'
 intPair :: Parser [Integer]
 intPair = (\x y -> [x,y]) <$> posInt <* char ' ' <*> posInt
 
+-- Exercise 4
+instance Alternative Parser where
+    empty = Parser $ \s -> Nothing
+    (Parser l) <|> (Parser r) = Parser $ \s ->
+        case l s of Nothing   -> r s
+                    otherwise -> l s
+
