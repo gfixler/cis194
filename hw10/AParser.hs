@@ -92,7 +92,6 @@ instance Alternative Parser where
         case l s of Nothing   -> r s
                     otherwise -> l s
 
--- Exercise 5
-upper :: Parser Char
-upper = satisfy isUpper
+intOrUppercase :: Parser ()
+intOrUppercase = pure () <$> posInt <|> pure () <$> satisfy isUpper
 
