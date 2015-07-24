@@ -4,7 +4,7 @@ import Control.Applicative hiding ((*>), mapA, sequenceA, replicateA)
 l *> r = (id <$ l) <*> r
 
 mapA :: Applicative f => (a -> f b) -> ([a] -> f [b])
-mapA f = undefined
+mapA f = sequenceA . fmap f
 
 sequenceA :: Applicative f => [f a] -> f [a]
 sequenceA = foldr (liftA2 (:)) (pure [])
